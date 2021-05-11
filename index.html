@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-wEmeIV1mKuiNpC+IOBjI7aAzPcEZeedi5yW5f2yOq55WWLwNGmvvx4Um1vskeMj0" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-p34f1UUtsS3wqzfto5wAAmdvj+osOnFyQFpp4Ua3gs/ZVWx6oOypYoCJhGGScy+8"
+        crossorigin="anonymous"></script>
+
+    <!-- our calc script -->
+    <script type='text/javascript' src="./js/tax.js"></script>
+
+    <title>Tax Calculator</title>
+    <link rel="shortcut icon" type="image/jpg" href="img/taxes.png" />
+</head>
+
+<body>
+
+    <div class="col d-flex justify-content-center mt-5 ms-3 me-3">
+        <div class="card" style="width: 50rem;">
+
+            <div class="card-body p-5">
+                <img src="img/head.svg" class="card-img-top" height="200px" alt="heading image">
+                <h5 class="card-title mt-5">Enter your income & we will tell how much tax you have to pay</h5>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">₹</span>
+                    <input id="income_input" type="text" class="form-control"
+                        aria-label="Amount (to the nearest dollar)">
+                    <span class="input-group-text">.00</span>
+                    <button class="btn btn-outline-primary" type="button" id="button-addon2"
+                        onclick="inputAmount()">Calculate</button>
+                </div>
+
+                <h6 id="output_tax_amount"></h6>
+            </div>
+
+            <div class="card-body mt-5 p-5">
+                <img src="img/head.svg" class="card-img-top" height="200px" alt="heading image">
+                <h5 class="card-title mt-5">Enter your net income & we will tell your gross income</h5>
+                <div class="input-group mb-3">
+                    <span class="input-group-text">₹</span>
+                    <input id="net_input" type="text" class="form-control"
+                        aria-label="Amount (to the nearest dollar)">
+                    <span class="input-group-text">.00</span>
+                    <button class="btn btn-outline-primary" type="button" id="button-addon2"
+                        onclick="netAmount()">Calculate</button>
+                </div>
+
+                <h6 id="output_gross_amount"></h6>
+            </div>
+
+        </div>
+    </div>
+
+    <script type='text/javascript'>
+        function inputAmount() {
+            var inputVal = document.getElementById("income_input").value;
+
+            var income = 0;
+            if (inputVal.length > 0)
+                income = Number(inputVal);
+
+            var calculator = new TaxCalculator();
+            var tax = calculator.calculateTax(income);
+
+            document.getElementById("output_tax_amount").innerText = "Taxable Amount is ₹" + tax.toString();
+        };
+
+        function netAmount(){
+            var inputVal = document.getElementById("net_input").value;
+
+            var income = 0;
+            if (inputVal.length > 0)
+                income = Number(inputVal);
+
+            var calculator = new TaxCalculator();
+            var gross = calculator.calculateGross(income);
+
+            document.getElementById("output_gross_amount").innerText = "Gross Amount is ₹" + gross.toString();
+        }
+    </script>
+
+</body>
+
+</html>
